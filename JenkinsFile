@@ -3,16 +3,21 @@ pipeline {
 
     stages {
 
-        stage('Check Python') {
+        stage('Checkout') {
             steps {
-                bat 'python --version'
-                bat 'py --version'
+                git branch: 'main', url: 'https://github.com/mridulmehta444op/python-unit-testing-pipeline'
             }
         }
 
-        stage('Check Pip') {
+        stage('Install Dependencies') {
             steps {
-                bat 'python -m pip --version'
+                bat 'python -m pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat 'python -m pytest -v'
             }
         }
     }
